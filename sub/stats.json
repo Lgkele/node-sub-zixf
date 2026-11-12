@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T12:10:35.043Z",
+  "updated": "2026-11-12T12:30:49.749Z",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/sub",
@@ -20,9 +20,9 @@
     {
       "url": "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
       "ok": true,
-      "bytes": 103667,
-      "lines": 512,
-      "kept": 127,
+      "bytes": 104600,
+      "lines": 517,
+      "kept": 52,
       "via": "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt"
     },
     {
@@ -36,9 +36,9 @@
     {
       "url": "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/v2ray/super-sub.txt",
       "ok": true,
-      "bytes": 84652,
+      "bytes": 80500,
       "lines": 200,
-      "kept": 195,
+      "kept": 197,
       "via": "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/v2ray/super-sub.txt"
     },
     {
@@ -46,7 +46,7 @@
       "ok": true,
       "bytes": 29654,
       "lines": 200,
-      "kept": 110,
+      "kept": 116,
       "via": "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.txt"
     },
     {
@@ -62,7 +62,7 @@
       "ok": true,
       "bytes": 451312,
       "lines": 1751,
-      "kept": 468,
+      "kept": 475,
       "via": "https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ray-base64.txt"
     },
     {
@@ -71,20 +71,20 @@
       "error": "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt → HTTP 404 ; [镜像] https://raw.gitmirror.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt → ENOTFOUND ; [镜像] https://ghproxy.net/https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt → HTTP 404 ; [镜像] https://gh-proxy.com/https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt → HTTP 404"
     }
   ],
-  "raw": 3291,
+  "raw": 3296,
   "junk": 21,
   "badHost": 20,
-  "duplicate": 1859,
-  "hostCap": 2,
+  "duplicate": 1925,
+  "hostCap": 1,
   "dead": 447,
-  "total": 942,
+  "total": 882,
   "byProtocol": {
-    "vless": 413,
+    "vless": 374,
     "hysteria2": 2,
     "ss": 281,
-    "trojan": 150,
-    "vmess": 89,
-    "ssr": 4,
+    "trojan": 152,
+    "vmess": 68,
+    "ssr": 2,
     "hy2": 3
   }
 }
