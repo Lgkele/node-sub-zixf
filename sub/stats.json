@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T07:24:53.612Z",
+  "updated": "2026-11-12T12:10:35.043Z",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/sub",
@@ -44,9 +44,9 @@
     {
       "url": "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.txt",
       "ok": true,
-      "bytes": 34186,
+      "bytes": 29654,
       "lines": 200,
-      "kept": 119,
+      "kept": 110,
       "via": "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/Eternity.txt"
     },
     {
@@ -62,7 +62,7 @@
       "ok": true,
       "bytes": 451312,
       "lines": 1751,
-      "kept": 466,
+      "kept": 468,
       "via": "https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ray-base64.txt"
     },
     {
@@ -74,16 +74,16 @@
   "raw": 3291,
   "junk": 21,
   "badHost": 20,
-  "duplicate": 1852,
+  "duplicate": 1859,
   "hostCap": 2,
-  "dead": 465,
-  "total": 931,
+  "dead": 447,
+  "total": 942,
   "byProtocol": {
-    "vless": 412,
+    "vless": 413,
     "hysteria2": 2,
-    "ss": 268,
-    "trojan": 148,
-    "vmess": 94,
+    "ss": 281,
+    "trojan": 150,
+    "vmess": 89,
     "ssr": 4,
     "hy2": 3
   }
