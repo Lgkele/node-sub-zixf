@@ -3,13 +3,14 @@ name: Update subscription
 on:
   schedule:
     # GitHub 用 UTC。23 */6 * * * = 每 6 小时一次（北京时间 07:23 / 13:23 / 19:23 / 01:23）
-    # 想改成每天一次就写：23 21 * * *   (UTC 21:23 = 北京 05:23)
     - cron: '23 */6 * * *'
   workflow_dispatch:
   push:
     paths:
       - 'sources.txt'
       - 'fetch-nodes.mjs'
+      - 'convert.mjs'
+      - 'sync-gist.mjs'
       - '.github/workflows/update.yml'
 
 permissions:
@@ -23,7 +24,6 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
     steps:
       - uses: actions/checkout@v4
 
@@ -33,39 +33,41 @@ jobs:
 
       - name: 抓取 / 清洗 / 去重 / 存活检测
         env:
-          TCP_CHECK: '1'            # 置 0 则跳过连通性检测（更快，但会留死节点）
+          TCP_CHECK: '1'
           TCP_CONCURRENCY: '192'
           TCP_TIMEOUT_MS: '3000'
-          MIN_NODES: '20'           # 低于这个数量认为抓取异常，直接失败并保留上一版
-          GIST_ID: ${{ vars.GIST_ID }}      # 可选：想用 gist 当订阅地址时在仓库变量里设置
+          MIN_NODES: '20' # 低于这个数量认为抓取异常，直接失败并保留上一版
+          GIST_ID: ${{ vars.GIST_ID }} # 上游可选 Gist 变量（未设则跳过）
           GH_TOKEN: ${{ secrets.GIST_PAT }}
         run: node fetch-nodes.mjs
+
+      - name: 转换为 Clash / sing-box
+        env:
+          MIN_NODES: '20' # 可转换节点少于 20 则失败、不提交，保留上一版 clash.yaml / sing-box.json
+        run: node convert.mjs
 
       - name: 写运行摘要
         if: always()
         run: |
           echo "## 本次抓取" >> $GITHUB_STEP_SUMMARY
-          node -e '
-            const fs=require("fs");
-            if(!fs.existsSync("sub/stats.json")){console.log("没有 stats.json");process.exit(0)}
-            const s=JSON.parse(fs.readFileSync("sub/stats.json","utf8"));
-            const rows=[["有效节点",s.total],["抓取原始",s.raw],["广告/通知过滤",s.junk],["保留但重复丢弃",s.duplicate],["同端口限量丢弃",s.hostCap],["连通性检测剔除",s.dead]];
-            console.log("| 项目 | 数量 |\n|---|---|");
-            for(const [k,v] of rows) console.log(`| ${k} | ${v} |`);
-            console.log("\n| 协议 | 数量 |\n|---|---|");
-            for(const [k,v] of Object.entries(s.byProtocol||{}).sort((a,b)=>b[1]-a[1])) console.log(`| ${k} | ${v} |`);
-            console.log("\n| 源 | 结果 |\n|---|---|");
-            for(const src of s.sources) console.log(`| ${src.url.replace("https://raw.githubusercontent.com/","")} | ${src.ok?src.kept+" 条":("失败: "+String(src.error).slice(0,60))} |`);
-          ' >> $GITHUB_STEP_SUMMARY
+          echo "- v2ray.txt 行数：$(wc -l < sub/v2ray.txt 2>/dev/null || echo 0)" >> $GITHUB_STEP_SUMMARY
+          echo "- Clash proxies：$(grep -c '^  - name:' sub/clash.yaml 2>/dev/null || echo 0)" >> $GITHUB_STEP_SUMMARY
+          ls -l sub/ >> $GITHUB_STEP_SUMMARY
 
       - name: 提交更新
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sub
+          git add sub/
           if git diff --cached --quiet; then
-            echo "节点没有变化，跳过提交"
-          else
-            git commit -m "chore: update subscription $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+            echo "no changes"
+            exit 0
           fi
+          git commit -m "chore: update subscription $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
+
+      - name: 同步到 Gist（base64 / Clash / sing-box）
+        env:
+          GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: node sync-gist.mjs
