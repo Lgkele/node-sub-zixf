@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-12T12:30:49.749Z",
+  "updated": "2026-11-12T12:35:18.144Z",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/free-nodes/v2rayfree/main/sub",
@@ -76,14 +76,14 @@
   "badHost": 20,
   "duplicate": 1925,
   "hostCap": 1,
-  "dead": 447,
-  "total": 882,
+  "dead": 453,
+  "total": 876,
   "byProtocol": {
-    "vless": 374,
+    "vless": 367,
     "hysteria2": 2,
-    "ss": 281,
+    "ss": 284,
     "trojan": 152,
-    "vmess": 68,
+    "vmess": 66,
     "ssr": 2,
     "hy2": 3
   }
